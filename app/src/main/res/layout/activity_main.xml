@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.harshbshah.markthewords.androidgame.MainActivity">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center"
+            android:text="ABC's of Android game"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/the_button"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:enabled="false"
+            android:text="RESET"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="SPRITE SPEED (?,?)"
+            android:id="@+id/the_label"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="LAST COLLISSION XY (?,?)"
+            android:id="@+id/the_other_label"/>
+        <com.harshbshah.markthewords.androidgame.GameBoard
+            android:layout_width="fill_parent"
+            android:layout_margin="20dip"
+            android:id="@+id/the_canvas"
+            android:layout_height="fill_parent" />
+    </LinearLayout>
+
