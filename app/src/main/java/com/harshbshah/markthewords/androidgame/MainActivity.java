@@ -19,6 +19,13 @@ public class MainActivity extends Activity implements OnClickListener {
     private static final int FRAME_RATE = 20; //50 frames per second
     private Point sprite1Velocity;
     private Point sprite2Velocity;
+    private Point sprite3Velocity;
+    private Point sprite4Velocity;
+
+    private int sprite3MaxX;
+    private int sprite3MaxY;
+    private int sprite4MaxX;
+    private int sprite4MaxY;
     private int sprite1MaxX;
     private int sprite1MaxY;
     private int sprite2MaxX;
@@ -39,7 +46,27 @@ public class MainActivity extends Activity implements OnClickListener {
             }
         }, 1000);
     }
+    private Point getSunVelocity(){
+       // int min = 1;
+       // int max = 5;
+        Point sp3 = new Point
+                (((GameBoard) findViewById(R.id.the_canvas)).getSprite3X(),
+                        ((GameBoard) findViewById(R.id.the_canvas)).getSprite3Y());
+        int x= sp3.x+2;
+        int y = 3;
+        return new Point(x, y);
+    }
 
+    private Point getMoonVelocity(){
+        // int min = 1;
+        // int max = 5;
+        Point sp4 = new Point
+                (((GameBoard) findViewById(R.id.the_canvas)).getSprite4X(),
+                        ((GameBoard) findViewById(R.id.the_canvas)).getSprite4Y());
+        int x= sp4.x+2;
+        int y = 3;
+        return new Point(x, y);
+    }
     private Point getRandomVelocity() {
         Random r = new Random();
         int min = 1;
@@ -70,14 +97,22 @@ public class MainActivity extends Activity implements OnClickListener {
         //Select two random points for our initial sprite placement.
         //The loop is just to make sure we don't accidentally pick
         //two points that overlap.
-        Point p1, p2;
+        Point p1, p2,p3,p4;
+        p3 = new Point(15,3);
+        p4 = new Point(0,3);
         do {
             p1 = getRandomPoint();
             p2 = getRandomPoint();
-        } while (Math.abs(p1.x - p2.x) <
+        }
+
+        while (Math.abs(p1.x - p2.x) <
                 ((GameBoard) findViewById(R.id.the_canvas)).getSprite1Width());
+        ((GameBoard) findViewById(R.id.the_canvas)).setSprite3(p3.x, p3.y);
+        ((GameBoard) findViewById(R.id.the_canvas)).setSprite4(p4.x, p4.y);
         ((GameBoard) findViewById(R.id.the_canvas)).setSprite1(p1.x, p1.y);
         ((GameBoard) findViewById(R.id.the_canvas)).setSprite2(p2.x, p2.y);
+        sprite3Velocity = getSunVelocity();
+        sprite4Velocity = getMoonVelocity();
         //Give the asteroid a random velocity
         sprite1Velocity = getRandomVelocity();
         //Fix the ship velocity at a constant speed for now
@@ -91,6 +126,14 @@ public class MainActivity extends Activity implements OnClickListener {
                 ((GameBoard) findViewById(R.id.the_canvas)).getSprite2Width();
         sprite2MaxY = findViewById(R.id.the_canvas).getHeight() -
                 ((GameBoard) findViewById(R.id.the_canvas)).getSprite2Height();
+        sprite3MaxX = findViewById(R.id.the_canvas).getWidth() -
+                ((GameBoard) findViewById(R.id.the_canvas)).getSprite3Width();
+        sprite3MaxY = findViewById(R.id.the_canvas).getHeight() -
+                ((GameBoard) findViewById(R.id.the_canvas)).getSprite3Height();
+        sprite4MaxX = findViewById(R.id.the_canvas).getWidth() -
+                ((GameBoard) findViewById(R.id.the_canvas)).getSprite4Width();
+        sprite4MaxY = findViewById(R.id.the_canvas).getHeight() -
+                ((GameBoard) findViewById(R.id.the_canvas)).getSprite4Height();
         ((Button) findViewById(R.id.the_button)).setEnabled(true);
         frame.removeCallbacks(frameUpdate);
         frame.postDelayed(frameUpdate, FRAME_RATE);
@@ -122,6 +165,12 @@ public class MainActivity extends Activity implements OnClickListener {
             Point sprite2 = new Point
                     (((GameBoard) findViewById(R.id.the_canvas)).getSprite2X(),
                             ((GameBoard) findViewById(R.id.the_canvas)).getSprite2Y());
+            Point sprite3 = new Point
+                    (((GameBoard) findViewById(R.id.the_canvas)).getSprite3X(),
+                            ((GameBoard) findViewById(R.id.the_canvas)).getSprite3Y());
+            Point sprite4 = null;
+
+
             //Now calc the new positions.
             //Note if we exceed a boundary the direction of the velocity gets reversed.
             sprite1.x = sprite1.x + sprite1Velocity.x;
@@ -140,10 +189,36 @@ public class MainActivity extends Activity implements OnClickListener {
             if (sprite2.y > sprite2MaxY || sprite2.y < 5) {
                 sprite2Velocity.y *= -1;
             }
+            sprite3.x = sprite3.x + sprite3Velocity.x;
+          if (sprite3.x > sprite3MaxX + 1 || sprite3.x < 6) {
+             //sprite3Velocity.x = -3;
+              //Toast.makeText(MainActivity.this,"here",Toast.LENGTH_LONG).show();
+              if(sprite4 == null) {
+                  sprite4 = new Point
+                          (((GameBoard) findViewById(R.id.the_canvas)).getSprite4X(),
+                                  ((GameBoard) findViewById(R.id.the_canvas)).getSprite4Y());
+
+              }
+
+                  sprite4.x = sprite4.x + sprite4Velocity.x;
+                  sprite4.y = sprite4Velocity.y;
+
+                  //reappeare here
+              //sprite3 = ;
+          }
+            sprite3.y =  sprite3Velocity.y;
+
+
             ((GameBoard) findViewById(R.id.the_canvas)).setSprite1(sprite1.x,
                     sprite1.y);
             ((GameBoard) findViewById(R.id.the_canvas)).setSprite2(sprite2.x, sprite2.y);
-            ((GameBoard) findViewById(R.id.the_canvas)).invalidate();
+
+
+           ((GameBoard) findViewById(R.id.the_canvas)).setSprite3(sprite3.x,sprite3.y);
+            if(sprite4!=null) {
+                ((GameBoard) findViewById(R.id.the_canvas)).setSprite4(sprite4.x, sprite4.y);
+            }
+                ((GameBoard) findViewById(R.id.the_canvas)).invalidate();
             frame.postDelayed(frameUpdate, FRAME_RATE);
         }
     };
