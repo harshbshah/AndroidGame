@@ -47,6 +47,7 @@ public class GameBoard  extends View {
     private Bitmap bm2 = null;
     private Bitmap bm3 = null;
     private Bitmap bm4 = null;
+    static int  moonExistOnscreen=0;
 
 
     private Matrix m = null;
@@ -225,18 +226,41 @@ public class GameBoard  extends View {
             for (int i=0; i<NUM_OF_STARS; i++) {
                 canvas.drawPoint(starField.get(i).x, starField.get(i).y, p);
             }
-            if(sprite3.x>=0){
-                canvas.drawBitmap(bm3, sprite3.x, sprite3.y, null);
-                int sprite3MaxX = findViewById(R.id.the_canvas).getWidth() -
-                        ((GameBoard) findViewById(R.id.the_canvas)).getSprite3Width();
 
-                if (sprite3.x > sprite3MaxX + 1 || sprite3.x < 6) {
-                        canvas.drawBitmap(bm4, sprite4.x, sprite4.y, null);
-                    Log.d("le","le");
+            int sprite3MaxX = findViewById(R.id.the_canvas).getWidth() -
+                    ((GameBoard) findViewById(R.id.the_canvas)).getSprite3Width();
+            int sprite4MaxX = findViewById(R.id.the_canvas).getWidth() -
+                    ((GameBoard) findViewById(R.id.the_canvas)).getSprite4Width();
+            if(moonExistOnscreen==0) {
+                if (sprite3.x>findViewById(R.id.the_canvas).getWidth()) {
+                    //canvas.drawBitmap(bm4, 0, 0, null);
+                    sprite4.x=0;
+                    sprite4Bounds = new Rect(0,0, bm4.getWidth(), bm4.getHeight());
+                    moonExistOnscreen = 1;
+                    Log.d("sprite3.x",sprite3.x+"-"+sprite3MaxX);
+
+                } else {
+                    canvas.drawBitmap(bm3, sprite3.x, sprite3.y, null);
+                    //sprite3Bounds = new Rect(sprite3.x, sprite3.y, bm3.getWidth(), bm3.getHeight());
+                    moonExistOnscreen = 0;
                 }
-                //Log.d("sprite3.x "+sprite3.x,"HI");
-
             }
+            else {
+                if (sprite4.x>findViewById(R.id.the_canvas).getWidth()) {
+                    //canvas.drawBitmap(bm3, 0, 0, null);
+                    sprite3Bounds = new Rect(0,0, bm3.getWidth(), bm3.getHeight());
+                    sprite3.x=0;
+                    moonExistOnscreen = 0;
+                    Log.d("sprite4.x",sprite4.x+"-"+sprite4MaxX);
+                } else {
+                    canvas.drawBitmap(bm4, sprite4.x, sprite4.y, null);
+                    //sprite4Bounds = new Rect(sprite4.x, sprite4.y, bm4.getWidth(), bm4.getHeight());
+                    moonExistOnscreen = 1;
+                }
+            }
+                //Log.d("spr","fgh");
+
+
 
 
 

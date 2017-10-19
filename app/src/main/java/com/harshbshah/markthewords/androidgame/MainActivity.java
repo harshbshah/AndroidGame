@@ -111,7 +111,7 @@ public class MainActivity extends Activity implements OnClickListener {
         ((GameBoard) findViewById(R.id.the_canvas)).setSprite4(p4.x, p4.y);
         ((GameBoard) findViewById(R.id.the_canvas)).setSprite1(p1.x, p1.y);
         ((GameBoard) findViewById(R.id.the_canvas)).setSprite2(p2.x, p2.y);
-        sprite3Velocity = getSunVelocity();
+        sprite3Velocity = getMoonVelocity();
         sprite4Velocity = getMoonVelocity();
         //Give the asteroid a random velocity
         sprite1Velocity = getRandomVelocity();
@@ -197,6 +197,7 @@ public class MainActivity extends Activity implements OnClickListener {
                   sprite4 = new Point
                           (((GameBoard) findViewById(R.id.the_canvas)).getSprite4X(),
                                   ((GameBoard) findViewById(R.id.the_canvas)).getSprite4Y());
+                  //sprite3=null;
 
               }
 
@@ -206,6 +207,7 @@ public class MainActivity extends Activity implements OnClickListener {
                   //reappeare here
               //sprite3 = ;
           }
+
             sprite3.y =  sprite3Velocity.y;
 
 
