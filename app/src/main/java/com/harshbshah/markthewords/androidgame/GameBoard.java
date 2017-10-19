@@ -232,6 +232,10 @@ public class GameBoard  extends View {
             int sprite4MaxX = findViewById(R.id.the_canvas).getWidth() -
                     ((GameBoard) findViewById(R.id.the_canvas)).getSprite4Width();
             if(moonExistOnscreen==0) {
+                p.setColor(Color.WHITE);
+                p.setAlpha(sprite3.x);
+                p.setStrokeWidth(3);
+                canvas.drawRect(0, 0, getWidth(), getHeight(), p);
                 if (sprite3.x>findViewById(R.id.the_canvas).getWidth()) {
                     //canvas.drawBitmap(bm4, 0, 0, null);
                     sprite4.x=0;
@@ -246,6 +250,10 @@ public class GameBoard  extends View {
                 }
             }
             else {
+                p.setColor(Color.BLACK);
+                p.setAlpha(sprite4.x);
+                p.setStrokeWidth(3);
+                canvas.drawRect(0, 0, getWidth(), getHeight(), p);
                 if (sprite4.x>findViewById(R.id.the_canvas).getWidth()) {
                     //canvas.drawBitmap(bm3, 0, 0, null);
                     sprite3Bounds = new Rect(0,0, bm3.getWidth(), bm3.getHeight());
